@@ -1,3 +1,4 @@
+//this file is public domain
 #include "../IniParser.h"
 
 int main()

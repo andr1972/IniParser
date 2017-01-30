@@ -1,3 +1,5 @@
+/* This file is part of https://github.com/borneq/IniParser
+The MIT License (MIT), see file LICENSE */
 #include "StrTools.h"
 
 //http://stackoverflow.com/questions/1798112/removing-leading-and-trailing-spaces-from-a-string

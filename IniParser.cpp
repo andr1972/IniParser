@@ -1,3 +1,5 @@
+/* This file is part of https://github.com/borneq/IniParser
+The MIT License (MIT), see file LICENSE */
 #include <fstream>
 #include <string>
 #include "StrTools.h"
