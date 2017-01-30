@@ -35,11 +35,11 @@ private:
 	void freeStructs();
 	size_t updateCnt;
 public:
-	IniParser(const string &filename);
+	IniParser(const string &filename, bool mustExist);
 	~IniParser();
 	void beginUpdate();
 	void endUpdate();
-	void reload();
+	void reload(bool mustExist);
 	void clearAll();
 	bool sectionExists(const string &sectStr);
 	bool keyExists(const string &sectStr, const string &keyStr);
@@ -48,10 +48,15 @@ public:
 	void eraseSection(const string &sectStr);
 	void deleteSection(const string &sectStr);
 	void deleteKey(const string &sectStr, const string &keyStr);
-	string readString(const string &sectStr, const string &keyStr, const string &def);
-	long long readLong(const string &sectStr, const string &keyStr, const long long def);
-	double readDouble(const string &sectStr, const string &keyStr, const double def);
-	bool readBool(const string &sectStr, const string &keyStr, const bool def);
+	bool tryReadString(string &result, const string &sectStr, const string &keyStr);
+	string readString(const string &sectStr, const string &keyStr);
+	string readStringDef(const string &sectStr, const string &keyStr, const string &def);
+	long long readInt(const string &sectStr, const string &keyStr);
+	long long readIntDef(const string &sectStr, const string &keyStr, const long long def);
+	double readDouble(const string &sectStr, const string &keyStr);
+	double readDoubleDef(const string &sectStr, const string &keyStr, const double def);
+	bool readBool(const string &sectStr, const string &keyStr);
+	bool readBoolDef(const string &sectStr, const string &keyStr, const bool def);
 	void writeString(const string &sectStr, const string &keyStr, const string &valueStr);
 	void writeLong(const string &sectStr, const string &keyStr, const long long value);
 	void writeDouble(const string &sectStr, const string &keyStr, const double value);

@@ -5,11 +5,11 @@ The MIT License (MIT), see file LICENSE */
 #include "StrTools.h"
 #include "IniParser.h"
 
-IniParser::IniParser(const string &filename) : filename(filename)
+IniParser::IniParser(const string &filename, bool mustExist) : filename(filename)
 {
 	dirty = false;
 	updateCnt = 0;
-	reload();
+	reload(mustExist);
 }
 
 void IniParser::changed()
@@ -31,7 +31,7 @@ void IniParser::endUpdate()
 		flush();
 }
 
-void IniParser::reload()
+void IniParser::reload(bool mustExist)
 {
 	sections.clear();
 	ifstream ifs(filename.c_str());
@@ -42,6 +42,7 @@ void IniParser::reload()
 			fileLines.push_back(line);
 		ifs.close();
 	}
+	else if (mustExist) throw IniException(filename + " not exists");
 	Sect *psect = new Sect();
 	size_t sectCount = 0;
 	vector<string> comments;
@@ -196,31 +197,68 @@ void IniParser::deleteKey(const string &sectStr, const string &keyStr)
 	changed();
 }
 
-string IniParser::readString(const string &sectStr, const string &keyStr, const string &def)
+bool IniParser::tryReadString(string &result, const string &sectStr, const string &keyStr)
 {
 	unordered_map<string, size_t>::const_iterator it = sectMap.find(sectStr);
-	if (it == sectMap.end()) return def;
+	if (it == sectMap.end()) return false;
 	Sect* sect = sections[(*it).second];
 	unordered_map<string, size_t>::const_iterator it2 = sect->keysMap.find(keyStr);
-	if (it2 == sect->keysMap.end()) return def;
-	return sect->keysval[(*it2).second].val;
+	if (it2 == sect->keysMap.end()) return false;
+	result = sect->keysval[(*it2).second].val;
+	return true;
 }
 
-long long IniParser::readLong(const string &sectStr, const string &keyStr, const long long def)
+string IniParser::readString(const string &sectStr, const string &keyStr)
 {
-	string str = readString(sectStr, keyStr, to_string(def));
+	string result;
+	if (tryReadString(result, sectStr, keyStr))
+		return result;
+	else
+		throw IniException("Not found key "+keyStr+" in section "+sectStr);
+}
+
+string IniParser::readStringDef(const string &sectStr, const string &keyStr, const string &def)
+{
+	string result;
+	if (tryReadString(result, sectStr, keyStr))
+		return result;
+	else
+		return def;
+}
+
+long long IniParser::readInt(const string &sectStr, const string &keyStr)
+{
+	string str = readString(sectStr, keyStr);
 	return atoll(str.c_str());
 }
 
-double IniParser::readDouble(const string &sectStr, const string &keyStr, const double def)
+long long IniParser::readIntDef(const string &sectStr, const string &keyStr, const long long def)
 {
-	string str = readString(sectStr, keyStr, to_string(def));
+	string str = readStringDef(sectStr, keyStr, to_string(def));
+	return atoll(str.c_str());
+}
+
+double IniParser::readDouble(const string &sectStr, const string &keyStr)
+{
+	string str = readString(sectStr, keyStr);
 	return atof(str.c_str());
 }
 
-bool IniParser::readBool(const string &sectStr, const string &keyStr, const bool def)
+double IniParser::readDoubleDef(const string &sectStr, const string &keyStr, const double def)
 {
-	long long num = readLong(sectStr, keyStr, (long long)def);
+	string str = readStringDef(sectStr, keyStr, to_string(def));
+	return atof(str.c_str());
+}
+
+bool IniParser::readBool(const string &sectStr, const string &keyStr)
+{
+	long long num = readInt(sectStr, keyStr);
+	return num != 0;
+}
+
+bool IniParser::readBoolDef(const string &sectStr, const string &keyStr, const bool def)
+{
+	long long num = readIntDef(sectStr, keyStr, (long long)def);
 	return num != 0;
 }
 
