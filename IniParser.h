@@ -48,10 +48,10 @@ public:
 	void eraseSection(const string &sectStr);
 	void deleteSection(const string &sectStr);
 	void deleteKey(const string &sectStr, const string &keyStr);
-	string readString(const string &sectStr, const string &keyStr, const string &default);
-	long long readLong(const string &sectStr, const string &keyStr, const long long default);
-	double readDouble(const string &sectStr, const string &keyStr, const double default);
-	bool readBool(const string &sectStr, const string &keyStr, const bool default);
+	string readString(const string &sectStr, const string &keyStr, const string &def);
+	long long readLong(const string &sectStr, const string &keyStr, const long long def);
+	double readDouble(const string &sectStr, const string &keyStr, const double def);
+	bool readBool(const string &sectStr, const string &keyStr, const bool def);
 	void writeString(const string &sectStr, const string &keyStr, const string &valueStr);
 	void writeLong(const string &sectStr, const string &keyStr, const long long value);
 	void writeDouble(const string &sectStr, const string &keyStr, const double value);

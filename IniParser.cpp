@@ -196,31 +196,31 @@ void IniParser::deleteKey(const string &sectStr, const string &keyStr)
 	changed();
 }
 
-string IniParser::readString(const string &sectStr, const string &keyStr, const string &default)
+string IniParser::readString(const string &sectStr, const string &keyStr, const string &def)
 {
 	unordered_map<string, size_t>::const_iterator it = sectMap.find(sectStr);
-	if (it == sectMap.end()) return default;
+	if (it == sectMap.end()) return def;
 	Sect* sect = sections[(*it).second];
 	unordered_map<string, size_t>::const_iterator it2 = sect->keysMap.find(keyStr);
-	if (it2 == sect->keysMap.end()) return default;
+	if (it2 == sect->keysMap.end()) return def;
 	return sect->keysval[(*it2).second].val;
 }
 
-long long IniParser::readLong(const string &sectStr, const string &keyStr, const long long default)
+long long IniParser::readLong(const string &sectStr, const string &keyStr, const long long def)
 {
-	string str = readString(sectStr, keyStr, to_string(default));
+	string str = readString(sectStr, keyStr, to_string(def));
 	return atoll(str.c_str());
 }
 
-double IniParser::readDouble(const string &sectStr, const string &keyStr, const double default)
+double IniParser::readDouble(const string &sectStr, const string &keyStr, const double def)
 {
-	string str = readString(sectStr, keyStr, to_string(default));
+	string str = readString(sectStr, keyStr, to_string(def));
 	return atof(str.c_str());
 }
 
-bool IniParser::readBool(const string &sectStr, const string &keyStr, const bool default)
+bool IniParser::readBool(const string &sectStr, const string &keyStr, const bool def)
 {
-	long long num = readLong(sectStr, keyStr, (long long)default);
+	long long num = readLong(sectStr, keyStr, (long long)def);
 	return num != 0;
 }
 
