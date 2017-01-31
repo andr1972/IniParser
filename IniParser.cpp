@@ -33,7 +33,7 @@ void IniParser::endUpdate()
 
 void IniParser::reload(bool mustExist)
 {
-	sections.clear();
+	freeStructs();
 	ifstream ifs(filename.c_str());
 	vector<string> fileLines;
 	if (ifs.is_open())
