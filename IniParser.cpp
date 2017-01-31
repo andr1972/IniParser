@@ -78,6 +78,10 @@ void IniParser::reload(bool mustExist)
 			trio.val = StrTools::trimLeft(curLine.substr(eqPos + 1, curLine.length() - eqPos - 1));
 			trio.comments = comments;
 			comments.clear();
+
+			unordered_map<string, size_t>::const_iterator it2 = psect->keysMap.find(trio.key);
+            if (it2 != psect->keysMap.end())
+                throw IniException("Duplicate key \"" + trio.key + "\"in section [" + psect->sectHeader+ "] in file " + filename);
 			psect->keysMap[trio.key] = psect->keysval.size();
 			psect->keysval.push_back(trio);
 		}
