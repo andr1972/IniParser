@@ -43,7 +43,7 @@ void IniParser::reload(bool mustExist)
 		ifs.close();
 	}
 	else if (mustExist) throw IniException(filename + " not exists");
-	Sect *psect = new Sect();
+	Sect *psect = NULL;
 	size_t sectCount = 0;
 	vector<string> comments;
 	for (size_t i = 0; i < fileLines.size(); i++)
@@ -57,20 +57,18 @@ void IniParser::reload(bool mustExist)
 		}
 		if (curLine[0] == '[')
 		{
-			if (sectCount > 0)
-			{
-				sections.push_back(psect);
-				sectMap[psect->sectHeader] = sectCount-1;
-				psect = new Sect();
-			}
+			psect = new Sect();
 			if (curLine.back() != ']') throw IniException("Invalid section: " + curLine + " in file "+filename);
 			psect->sectHeader = curLine.substr(1, curLine.length() - 2);
 			psect->commentsBefore = comments;
 			comments.clear();
 			sectCount++;
+			sections.push_back(psect);
+			sectMap[psect->sectHeader] = sectCount - 1;
 		}
 		else
 		{
+			if (psect==NULL) throw IniException("Key before first section in line: \"" + curLine + "\" in file " + filename);
 			size_t eqPos = curLine.find('=');
 			if (eqPos == string::npos) throw IniException("Invalid key without '=': " + curLine + " in file " + filename);
 			Trio trio;
@@ -85,11 +83,6 @@ void IniParser::reload(bool mustExist)
 			psect->keysMap[trio.key] = psect->keysval.size();
 			psect->keysval.push_back(trio);
 		}
-	}
-	if (sectCount > 0)
-	{
-		sections.push_back(psect);
-		sectMap[psect->sectHeader] = sectCount-1;
 	}
 }
 
