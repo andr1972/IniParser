@@ -12,7 +12,10 @@ int main()
 		printf("%d\n", ini.keyExists("sect2", "abc"));
 		printf("%d\n", ini.keyExists("sect2", "key2"));
 		vector<string> sectNames = ini.readSections();
-		vector<string> keyNames = ini.readSection("sect2");
+		vector<string> keyNames = ini.readSectionKeys("sect2");
+		for (string key : keyNames) printf("sect2 key: %s\n", key.c_str());
+		vector<pair<string, string>> pairs = ini.readSectionPairs("sect2");
+		for (pair<string,string> p : pairs) printf("sect2 pair: %s:%s\n", p.first.c_str(), p.second.c_str());
 		printf("%s\n", ini.readString("sect2", "key2").c_str());
 		printf("%lld\n", ini.readInt("sect2", "key2"));
 		ini.writeString("sect2", "key2", "22");

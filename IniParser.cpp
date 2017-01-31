@@ -152,16 +152,33 @@ vector<string> IniParser::readSections()
 	return sectNames;
 }
 
-vector<string> IniParser::readSection(const string &sectStr)
+IniParser::Sect* IniParser::getSectPtr(const string &sectStr)
 {
-	vector<string> keyNames;
 	unordered_map<string, size_t>::const_iterator it = sectMap.find(sectStr);
 	if (it == sectMap.end()) throw IniException("Section " + sectStr + " not found in file " + filename);
 	size_t index = (*it).second;
-	Sect* sect = sections[index];
+	return sections[index];
+}
+
+vector<string> IniParser::readSectionKeys(const string &sectStr)
+{
+	Sect* sect = getSectPtr(sectStr);
+	vector<string> keyNames;
 	for (size_t i = 0; i < sect->keysval.size(); i++)
 		keyNames.push_back(sect->keysval[i].key);
 	return keyNames;
+}
+
+vector<pair<string,string>> IniParser::readSectionPairs(const string &sectStr)
+{
+	Sect* sect = getSectPtr(sectStr);
+	vector<pair<string, string>> keyPairs;
+	for (size_t i = 0; i < sect->keysval.size(); i++)
+	{
+		Trio t = sect->keysval[i];
+		keyPairs.push_back(make_pair(t.key, t.val));
+	}
+	return keyPairs;
 }
 
 void IniParser::eraseSection(const string &sectStr)

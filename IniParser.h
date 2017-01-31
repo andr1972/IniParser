@@ -34,6 +34,7 @@ private:
 	void changed();
 	void freeStructs();
 	size_t updateCnt;
+	IniParser::Sect* getSectPtr(const string &sectStr);
 public:
 	IniParser(const string &filename, bool mustExist);
 	~IniParser();
@@ -44,7 +45,8 @@ public:
 	bool sectionExists(const string &sectStr);
 	bool keyExists(const string &sectStr, const string &keyStr);
 	vector<string> readSections();
-	vector<string> readSection(const string &sectStr);
+	vector<string> readSectionKeys(const string &sectStr);
+	vector<pair<string, string>> readSectionPairs(const string &sectStr);
 	void eraseSection(const string &sectStr);
 	void deleteSection(const string &sectStr);
 	void deleteKey(const string &sectStr, const string &keyStr);
