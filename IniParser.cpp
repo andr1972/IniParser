@@ -181,6 +181,37 @@ vector<pair<string,string>> IniParser::readSectionPairs(const string &sectStr)
 	return keyPairs;
 }
 
+
+unordered_map<string, string> IniParser::readSectionMap(const string &sectStr)
+{
+	Sect* sect = getSectPtr(sectStr);
+	unordered_map<string, string> map;
+	for (size_t i = 0; i < sect->keysval.size(); i++)
+	{
+		Trio t = sect->keysval[i];
+		map[t.key] = t.val;
+	}
+	return map;
+}
+
+string IniParser::mapValue(unordered_map<string, string> map, const string &key)
+{
+	unordered_map<string, string>::const_iterator iter = map.find(key);
+	if (iter != map.end())
+		return iter->second;
+	else
+		throw IniException("Map not contains " + key);
+}
+
+string IniParser::mapValueDef(unordered_map<string, string> map, const string &key, const string &def)
+{
+	unordered_map<string, string>::const_iterator iter = map.find(key);
+	if (iter != map.end())
+		return iter->second;
+	else
+		return def;
+}
+
 void IniParser::eraseSection(const string &sectStr)
 {
 	unordered_map<string, size_t>::const_iterator it = sectMap.find(sectStr);

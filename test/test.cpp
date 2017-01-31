@@ -16,6 +16,8 @@ int main()
 		for (string key : keyNames) printf("sect2 key: %s\n", key.c_str());
 		vector<pair<string, string>> pairs = ini.readSectionPairs("sect2");
 		for (pair<string,string> p : pairs) printf("sect2 pair: %s:%s\n", p.first.c_str(), p.second.c_str());
+		unordered_map<string, string> map = ini.readSectionMap("sect2");
+		printf("sect2 map: key2:%s\n", IniParser::mapValueDef(map, "key2","").c_str());
 		printf("%s\n", ini.readString("sect2", "key2").c_str());
 		printf("%lld\n", ini.readInt("sect2", "key2"));
 		ini.writeString("sect2", "key2", "22");

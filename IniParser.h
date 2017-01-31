@@ -47,6 +47,9 @@ public:
 	vector<string> readSections();
 	vector<string> readSectionKeys(const string &sectStr);
 	vector<pair<string, string>> readSectionPairs(const string &sectStr);
+	unordered_map<string, string> readSectionMap(const string &sectStr);
+	static string mapValue(unordered_map<string, string> map, const string &key);
+	static string mapValueDef(unordered_map<string, string> map, const string &key, const string &def);
 	void eraseSection(const string &sectStr);
 	void deleteSection(const string &sectStr);
 	void deleteKey(const string &sectStr, const string &keyStr);
