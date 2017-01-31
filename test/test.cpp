@@ -14,7 +14,7 @@ int main()
 		vector<string> sectNames = ini.readSections();
 		vector<string> keyNames = ini.readSection("sect2");
 		printf("%s\n", ini.readString("sect2", "key2").c_str());
-		printf("%lld\n", ini.readInt("sect2", "key2"));		
+		printf("%lld\n", ini.readInt("sect2", "key2"));
 		ini.writeString("sect2", "key2", "22");
 		ini.writeString("sect2", "abc", "valabc");
 		ini.writeString("sect22", "abc", "22valabc");

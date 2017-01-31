@@ -64,7 +64,7 @@ void IniParser::reload(bool mustExist)
 			comments.clear();
 
 			unordered_map<string, size_t>::const_iterator it = sectMap.find(psect->sectHeader);
-			if (it != sectMap.end()) 
+			if (it != sectMap.end())
 				throw IniException("Duplicate section [" + psect->sectHeader + "] in file " + filename);
 			sectCount++;
 			sections.push_back(psect);
