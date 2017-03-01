@@ -56,8 +56,10 @@ public:
 	bool tryReadString(string &result, const string &sectStr, const string &keyStr);
 	string readString(const string &sectStr, const string &keyStr);
 	string readStringDef(const string &sectStr, const string &keyStr, const string &def);
-	long long readInt(const string &sectStr, const string &keyStr);
-	long long readIntDef(const string &sectStr, const string &keyStr, const long long def);
+	int readInt32(const string &sectStr, const string &keyStr);
+	int readInt32Def(const string &sectStr, const string &keyStr, const long long def);
+	long long readInt64(const string &sectStr, const string &keyStr);
+	long long readInt64Def(const string &sectStr, const string &keyStr, const long long def);
 	double readDouble(const string &sectStr, const string &keyStr);
 	double readDoubleDef(const string &sectStr, const string &keyStr, const double def);
 	bool readBool(const string &sectStr, const string &keyStr);

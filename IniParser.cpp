@@ -275,13 +275,25 @@ string IniParser::readStringDef(const string &sectStr, const string &keyStr, con
 		return def;
 }
 
-long long IniParser::readInt(const string &sectStr, const string &keyStr)
+int IniParser::readInt32(const string &sectStr, const string &keyStr)
+{
+	string str = readString(sectStr, keyStr);
+	return atoi(str.c_str());
+}
+
+int IniParser::readInt32Def(const string &sectStr, const string &keyStr, const long long def)
+{
+	string str = readStringDef(sectStr, keyStr, to_string(def));
+	return atoi(str.c_str());
+}
+
+long long IniParser::readInt64(const string &sectStr, const string &keyStr)
 {
 	string str = readString(sectStr, keyStr);
 	return atoll(str.c_str());
 }
 
-long long IniParser::readIntDef(const string &sectStr, const string &keyStr, const long long def)
+long long IniParser::readInt64Def(const string &sectStr, const string &keyStr, const long long def)
 {
 	string str = readStringDef(sectStr, keyStr, to_string(def));
 	return atoll(str.c_str());
@@ -301,13 +313,13 @@ double IniParser::readDoubleDef(const string &sectStr, const string &keyStr, con
 
 bool IniParser::readBool(const string &sectStr, const string &keyStr)
 {
-	long long num = readInt(sectStr, keyStr);
+	long long num = readInt64(sectStr, keyStr);
 	return num != 0;
 }
 
 bool IniParser::readBoolDef(const string &sectStr, const string &keyStr, const bool def)
 {
-	long long num = readIntDef(sectStr, keyStr, (long long)def);
+	long long num = readInt64Def(sectStr, keyStr, (long long)def);
 	return num != 0;
 }
 

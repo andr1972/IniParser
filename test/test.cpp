@@ -19,7 +19,7 @@ int main()
 		unordered_map<string, string> map = ini.readSectionMap("sect2");
 		printf("sect2 map: key2:%s\n", IniParser::mapValueDef(map, "key2","").c_str());
 		printf("%s\n", ini.readString("sect2", "key2").c_str());
-		printf("%lld\n", ini.readInt("sect2", "key2"));
+		printf("%lld\n", ini.readInt64("sect2", "key2"));
 		ini.writeString("sect2", "key2", "22");
 		ini.writeString("sect2", "abc", "valabc");
 		ini.writeString("sect22", "abc", "22valabc");
