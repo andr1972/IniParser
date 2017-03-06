@@ -57,8 +57,8 @@ void IniParser::reload(bool mustExist)
 		}
 		if (curLine[0] == '[')
 		{
-			psect = new Sect();
 			if (curLine.back() != ']') throw IniException("Invalid section: " + curLine + " in file "+filename);
+			psect = new Sect();
 			psect->sectHeader = curLine.substr(1, curLine.length() - 2);
 			psect->commentsBefore = comments;
 			comments.clear();
@@ -319,7 +319,7 @@ bool IniParser::readBool(const string &sectStr, const string &keyStr)
 
 bool IniParser::readBoolDef(const string &sectStr, const string &keyStr, const bool def)
 {
-	long long num = readInt64Def(sectStr, keyStr, (long long)def);
+	int num = readInt32Def(sectStr, keyStr, static_cast<int>(def));
 	return num != 0;
 }
 
