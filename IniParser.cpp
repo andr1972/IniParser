@@ -225,7 +225,7 @@ void IniParser::eraseSection(const string &sectStr)
 void IniParser::deleteSection(const string &sectStr)
 {
 	unordered_map<string, size_t>::const_iterator it = sectMap.find(sectStr);
-	if (it == sectMap.end()) throw IniException("Section " + sectStr + " not found in file " + filename);
+	if (it == sectMap.end()) return;
 	size_t index = (*it).second;
 	Sect* sect = sections[index];
 	delete sect;
@@ -338,7 +338,7 @@ void IniParser::writeString(const string &sectStr, const string &keyStr, const s
 		psect->keysMap[keyStr] = 0;
 		psect->sectHeader = sectStr;
 		sections.push_back(psect);
-		sectMap[sectStr] = sections.size()-1;
+        sectMap[sectStr] = sections.size()-1;
 		return;
 	}
 	Sect* sect = sections[(*it).second];
