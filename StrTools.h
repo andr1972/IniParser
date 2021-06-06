@@ -3,13 +3,11 @@ The MIT License (MIT), see file LICENSE */
 #pragma once
 #include <iostream>
 
-using namespace std;
-
 class StrTools
 {
 public:
-	static string trim(const string& str);
-	static string trimLeft(const string& str);
-	static string trimRight(const string& str);
+	static std::string trim(const std::string& str);
+	static std::string trimLeft(const std::string& str);
+	static std::string trimRight(const std::string& str);
 };
 

@@ -5,6 +5,8 @@ The MIT License (MIT), see file LICENSE */
 #include "StrTools.h"
 #include "IniParser.h"
 
+using namespace std;
+
 IniParser::IniParser(const string &filename, bool mustExist) : filename(filename)
 {
 	dirty = false;
@@ -338,7 +340,7 @@ void IniParser::writeString(const string &sectStr, const string &keyStr, const s
 		psect->keysMap[keyStr] = 0;
 		psect->sectHeader = sectStr;
 		sections.push_back(psect);
-        sectMap[sectStr] = sections.size()-1;
+		sectMap[sectStr] = sections.size()-1;
 		return;
 	}
 	Sect* sect = sections[(*it).second];

@@ -2,6 +2,8 @@
 The MIT License (MIT), see file LICENSE */
 #include "StrTools.h"
 
+using namespace std;
+
 //http://stackoverflow.com/questions/1798112/removing-leading-and-trailing-spaces-from-a-string
 string StrTools::trim(const string& str)
 {

@@ -6,67 +6,66 @@ The MIT License (MIT), see file LICENSE */
 #include <unordered_map>
 #include "IniException.h"
 
-using namespace std;
-
 class IniParser
 {
 private:
 	struct Trio
 	{
-		vector<string> comments;
-		string key;
-		string val;
+        std::vector<std::string> comments;
+        std::string key;
+        std::string val;
 	};
 
 	struct Sect
 	{
-		vector<string> commentsBefore;
-		string sectHeader;
-		vector<Trio> keysval;
-		unordered_map<string, size_t> keysMap;
+        std::vector<std::string> commentsBefore;
+        std::string sectHeader;
+        std::vector<Trio> keysval;
+        std::unordered_map<std::string, size_t> keysMap;
 	};
 
-	string filename;
-	vector<Sect*> sections;
-	unordered_map<string, size_t> sectMap;
+    std::string filename;
+    std::vector<Sect*> sections;
+    std::unordered_map<std::string, size_t> sectMap;
 	bool dirty;
 	void flush();
 	void changed();
 	void freeStructs();
 	size_t updateCnt;
-	IniParser::Sect* getSectPtr(const string &sectStr);
+	IniParser::Sect* getSectPtr(const std::string &sectStr);
 public:
-	IniParser(const string &filename, bool mustExist);
+	IniParser(const std::string &filename, bool mustExist);
 	~IniParser();
 	void beginUpdate();
 	void endUpdate();
 	void reload(bool mustExist);
 	void clearAll();
-	bool sectionExists(const string &sectStr);
-	bool keyExists(const string &sectStr, const string &keyStr);
-	vector<string> readSections();
-	vector<string> readSectionKeys(const string &sectStr);
-	vector<pair<string, string>> readSectionPairs(const string &sectStr);
-	unordered_map<string, string> readSectionMap(const string &sectStr);
-	static string mapValue(unordered_map<string, string> map, const string &key);
-	static string mapValueDef(unordered_map<string, string> map, const string &key, const string &def);
-	void eraseSection(const string &sectStr);
-	void deleteSection(const string &sectStr);
-	void deleteKey(const string &sectStr, const string &keyStr);
-	bool tryReadString(string &result, const string &sectStr, const string &keyStr);
-	string readString(const string &sectStr, const string &keyStr);
-	string readStringDef(const string &sectStr, const string &keyStr, const string &def);
-	int readInt32(const string &sectStr, const string &keyStr);
-	int readInt32Def(const string &sectStr, const string &keyStr, const long long def);
-	long long readInt64(const string &sectStr, const string &keyStr);
-	long long readInt64Def(const string &sectStr, const string &keyStr, const long long def);
-	double readDouble(const string &sectStr, const string &keyStr);
-	double readDoubleDef(const string &sectStr, const string &keyStr, const double def);
-	bool readBool(const string &sectStr, const string &keyStr);
-	bool readBoolDef(const string &sectStr, const string &keyStr, const bool def);
-	void writeString(const string &sectStr, const string &keyStr, const string &valueStr);
-	void writeLong(const string &sectStr, const string &keyStr, const long long value);
-	void writeDouble(const string &sectStr, const string &keyStr, const double value);
-	void writeBool(const string &sectStr, const string &keyStr, const bool value);
+	bool sectionExists(const std::string &sectStr);
+	bool keyExists(const std::string &sectStr, const std::string &keyStr);
+    std::vector<std::string> readSections();
+    std::vector<std::string> readSectionKeys(const std::string &sectStr);
+    std::vector<std::pair<std::string, std::string>> readSectionPairs(const std::string &sectStr);
+    std::unordered_map<std::string, std::string> readSectionMap(const std::string &sectStr);
+	static std::string mapValue(std::unordered_map<std::string, std::string> map, const std::string &key);
+	static std::string mapValueDef(std::unordered_map<std::string, std::string> map, const std::string &key,
+                                   const std::string &def);
+	void eraseSection(const std::string &sectStr);
+	void deleteSection(const std::string &sectStr);
+	void deleteKey(const std::string &sectStr, const std::string &keyStr);
+	bool tryReadString(std::string &result, const std::string &sectStr, const std::string &keyStr);
+    std::string readString(const std::string &sectStr, const std::string &keyStr);
+    std::string readStringDef(const std::string &sectStr, const std::string &keyStr, const std::string &def);
+	int readInt32(const std::string &sectStr, const std::string &keyStr);
+	int readInt32Def(const std::string &sectStr, const std::string &keyStr, const long long def);
+	long long readInt64(const std::string &sectStr, const std::string &keyStr);
+	long long readInt64Def(const std::string &sectStr, const std::string &keyStr, const long long def);
+	double readDouble(const std::string &sectStr, const std::string &keyStr);
+	double readDoubleDef(const std::string &sectStr, const std::string &keyStr, const double def);
+	bool readBool(const std::string &sectStr, const std::string &keyStr);
+	bool readBoolDef(const std::string &sectStr, const std::string &keyStr, const bool def);
+	void writeString(const std::string &sectStr, const std::string &keyStr, const std::string &valueStr);
+	void writeLong(const std::string &sectStr, const std::string &keyStr, const long long value);
+	void writeDouble(const std::string &sectStr, const std::string &keyStr, const double value);
+	void writeBool(const std::string &sectStr, const std::string &keyStr, const bool value);
 };
 
