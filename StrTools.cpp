@@ -7,7 +7,7 @@ using namespace std;
 //http://stackoverflow.com/questions/1798112/removing-leading-and-trailing-spaces-from-a-string
 string StrTools::trim(const string& str)
 {
-	const string whitespace = " \t";
+	const string whitespace = " \t\r";
 	const auto strBegin = str.find_first_not_of(whitespace);
 	if (strBegin == string::npos)
 		return ""; // no content
@@ -21,7 +21,7 @@ string StrTools::trim(const string& str)
 
 string StrTools::trimLeft(const string& str)
 {
-	const auto strBegin = str.find_first_not_of(" \t");
+	const auto strBegin = str.find_first_not_of(" \t\r");
 	if (strBegin == string::npos)
 		return ""; // no content
 	return str.substr(strBegin, str.length() - strBegin);
@@ -30,7 +30,7 @@ string StrTools::trimLeft(const string& str)
 
 string StrTools::trimRight(const string& str)
 {
-	const auto strEnd = str.find_last_not_of(" \t");
+	const auto strEnd = str.find_last_not_of(" \t\r");
 	if (strEnd == string::npos)
 		return ""; // no content
 	return str.substr(0, strEnd + 1);
